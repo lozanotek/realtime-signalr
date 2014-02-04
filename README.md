@@ -1,4 +1,4 @@
-SignalRAllTheThings
+SignalR All The Things!
 ===================
 
-Resources for the "SignalR All The Things!" presentation
+Repository for all resources (code, slides, etc.) for the "SignalR All The Things!" presentation.
