@@ -18,7 +18,7 @@
             var winner = UserRegistry.GetRandomUser();
             var userId = winner.UserId;
 
-            Clients.AllExcept(userId).notifyWinner("Not a Winner");
+            Clients.AllExcept(userId).notifyWinner("Loser!");
             Clients.User(userId).notifyWinner("Winner!");
 
             return winner;
