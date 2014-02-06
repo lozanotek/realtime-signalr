@@ -1,0 +1,31 @@
+﻿<div class="row">
+    <div class="col-lg-6">
+        <div class="well-sm">
+            <form class="form-horizontal" id="registerForm" name="registerForm" method="POST" action="@Url.Action("Index")">
+                <fieldset>
+                    <legend>Winner Picker</legend>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-2 control-label">Password</label>
+                        <div class="col-lg-10">
+                            <input type="tel" class="form-control" id="password" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="submit" class="btn btn-primary btn-success">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;Pick Winner
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            
+            @if (Model != null) {
+                <div class="jumbotron">
+                    <h2>We have a Winner!</h2>
+                    <p>@Model.UserId wins a prize!</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
