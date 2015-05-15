@@ -1,15 +1,20 @@
-﻿namespace GiveawayApp.Controllers {
+﻿namespace GiveawayApp.Controllers
+{
     using System.Web.Mvc;
-    using GiveawayApp.Models;
+    using Models;
 
-    public class PickController : Controller {
-        public ActionResult Index() {
+    public class PickController : Controller
+    {
+        public ActionResult Index()
+        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string password) {
-            if (!Security.ValidatePassword(password)) {
+        public ActionResult Index(string password)
+        {
+            if (!Security.ValidatePassword(password))
+            {
                 return View();
             }
 

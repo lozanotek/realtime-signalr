@@ -18,12 +18,13 @@
                 </button>
                 <a href="#" class="navbar-brand">Giveaways</a>
             </div>
-            @if (User.Identity.IsAuthenticated) {
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    </ul>
+                </div>
             }
         </div>
     </div>

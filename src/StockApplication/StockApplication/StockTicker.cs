@@ -1,4 +1,5 @@
-﻿namespace StockApplication {
+﻿namespace StockApplication
+{
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
@@ -6,7 +7,8 @@
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
-    public class StockTicker {
+    public class StockTicker
+    {
         // Singleton instance
         private readonly static Lazy<StockTicker> _instance = new Lazy<StockTicker>(
             () => new StockTicker(GlobalHost.ConnectionManager.GetHubContext<StockTickerHub>().Clients));
@@ -26,34 +28,43 @@
         private volatile bool _updatingStockPrices;
         private volatile MarketState _marketState;
 
-        private StockTicker(IHubConnectionContext clients) {
+        private StockTicker(IHubConnectionContext<dynamic> clients)
+        {
             Clients = clients;
             LoadDefaultStocks();
         }
 
-        public static StockTicker Instance {
-            get {
+        public static StockTicker Instance
+        {
+            get
+            {
                 return _instance.Value;
             }
         }
 
-        private IHubConnectionContext Clients {
+        private IHubConnectionContext<dynamic> Clients
+        {
             get;
             set;
         }
 
-        public MarketState MarketState {
+        public MarketState MarketState
+        {
             get { return _marketState; }
             private set { _marketState = value; }
         }
 
-        public IEnumerable<Stock> GetAllStocks() {
+        public IEnumerable<Stock> GetAllStocks()
+        {
             return _stocks.Values;
         }
 
-        public void OpenMarket() {
-            lock (_marketStateLock) {
-                if (MarketState != MarketState.Open) {
+        public void OpenMarket()
+        {
+            lock (_marketStateLock)
+            {
+                if (MarketState != MarketState.Open)
+                {
                     _timer = new Timer(UpdateStockPrices, null, _updateInterval, _updateInterval);
 
                     MarketState = MarketState.Open;
@@ -63,10 +74,14 @@
             }
         }
 
-        public void CloseMarket() {
-            lock (_marketStateLock) {
-                if (MarketState == MarketState.Open) {
-                    if (_timer != null) {
+        public void CloseMarket()
+        {
+            lock (_marketStateLock)
+            {
+                if (MarketState == MarketState.Open)
+                {
+                    if (_timer != null)
+                    {
                         _timer.Dispose();
                     }
 
@@ -77,9 +92,12 @@
             }
         }
 
-        public void Reset() {
-            lock (_marketStateLock) {
-                if (MarketState != MarketState.Closed) {
+        public void Reset()
+        {
+            lock (_marketStateLock)
+            {
+                if (MarketState != MarketState.Closed)
+                {
                     throw new InvalidOperationException("Market must be closed before it can be reset.");
                 }
 
@@ -88,7 +106,8 @@
             }
         }
 
-        private void LoadDefaultStocks() {
+        private void LoadDefaultStocks()
+        {
             _stocks.Clear();
 
             var stocks = new List<Stock>
@@ -101,14 +120,19 @@
             stocks.ForEach(stock => _stocks.TryAdd(stock.Symbol, stock));
         }
 
-        private void UpdateStockPrices(object state) {
+        private void UpdateStockPrices(object state)
+        {
             // This function must be re-entrant as it's running as a timer interval handler
-            lock (_updateStockPricesLock) {
-                if (!_updatingStockPrices) {
+            lock (_updateStockPricesLock)
+            {
+                if (!_updatingStockPrices)
+                {
                     _updatingStockPrices = true;
 
-                    foreach (var stock in _stocks.Values) {
-                        if (TryUpdateStockPrice(stock)) {
+                    foreach (var stock in _stocks.Values)
+                    {
+                        if (TryUpdateStockPrice(stock))
+                        {
                             BroadcastStockPrice(stock);
                         }
                     }
@@ -118,10 +142,12 @@
             }
         }
 
-        private bool TryUpdateStockPrice(Stock stock) {
+        private bool TryUpdateStockPrice(Stock stock)
+        {
             // Randomly choose whether to udpate this stock or not
             var r = _updateOrNotRandom.NextDouble();
-            if (r > 0.1) {
+            if (r > 0.1)
+            {
                 return false;
             }
 
@@ -136,8 +162,10 @@
             return true;
         }
 
-        private void BroadcastMarketStateChange(MarketState marketState) {
-            switch (marketState) {
+        private void BroadcastMarketStateChange(MarketState marketState)
+        {
+            switch (marketState)
+            {
                 case MarketState.Open:
                 Clients.All.marketOpened();
                 break;
@@ -147,16 +175,19 @@
             }
         }
 
-        private void BroadcastMarketReset() {
+        private void BroadcastMarketReset()
+        {
             Clients.All.marketReset();
         }
 
-        private void BroadcastStockPrice(Stock stock) {
+        private void BroadcastStockPrice(Stock stock)
+        {
             Clients.All.updateStockPrice(stock);
         }
     }
 
-    public enum MarketState {
+    public enum MarketState
+    {
         Closed,
         Open
     }

@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("GiveawayApp")]
 [assembly: AssemblyDescription("Sample application for 'SignalR All The Things!' talk.")]
-[assembly: AssemblyCompany("lozanotek")]
+[assembly: AssemblyCompany("lozanotek, inc.")]
 [assembly: AssemblyProduct("GiveawayApp")]
-[assembly: AssemblyCopyright("Copyright © lozanotek 2014")]
+[assembly: AssemblyCopyright("Copyright © lozanotek, inc. 2014")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("f93e3fc1-a8b8-47dd-8f0c-32e204e54cef")]

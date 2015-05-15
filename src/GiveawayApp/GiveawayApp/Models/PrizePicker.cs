@@ -1,20 +1,30 @@
-﻿namespace GiveawayApp.Models {
+﻿namespace GiveawayApp.Models
+{
     using Hubs;
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
-    public class PrizePicker {
-        private IHubConnectionContext Clients { get; set; }
+    public class PrizePicker
+    {
+        private IHubConnectionContext<dynamic> Clients { get; set; }
 
-        public PrizePicker()
-            : this(GlobalHost.ConnectionManager.GetHubContext<NotifyHub>().Clients) {
+        private static IHubConnectionContext<dynamic> GetHubClients()
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<NotifyHub>();
+            return hubContext.Clients;
+        } 
+
+        public PrizePicker() : this(GetHubClients())
+        {
         }
 
-        public PrizePicker(IHubConnectionContext clients) {
+        public PrizePicker(IHubConnectionContext<dynamic> clients)
+        {
             Clients = clients;
         }
 
-        public SignalRUser DrawPrize() {
+        public SignalRUser DrawPrize()
+        {
             var winner = UserRegistry.GetRandomUser();
             var userId = winner.UserId;
 

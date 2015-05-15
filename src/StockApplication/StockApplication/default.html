@@ -15,7 +15,15 @@
     <div id="stockTable">
         <table border="1">
             <thead>
-                <tr><th>Symbol</th><th>Price</th><th>Open</th><th>High</th><th>Low</th><th>Change</th><th>%</th></tr>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Price</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Change</th>
+                    <th>%</th>
+                </tr>
             </thead>
             <tbody>
                 <tr class="loading"><td colspan="7">loading...</td></tr>
@@ -28,14 +36,14 @@
         <div class="inner">
             <ul>
                 <li class="loading">loading...</li>
-            </ul> 
+            </ul>
         </div>
     </div>
 
-    <script src="jquery-1.10.2.min.js"></script>
+    <script src="scripts/jquery-2.1.4.min.js"></script>
     <script src="jquery.color-2.1.2.min.js"></script>
-    <script src="../Scripts/jquery.signalR-2.0.2.js"></script>
-    <script src="../signalr/hubs"></script>
+    <script src="scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="signalr/hubs"></script>
     <script src="SignalR.StockTicker.js"></script>
 </body>
 </html>

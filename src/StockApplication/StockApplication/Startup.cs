@@ -1,20 +1,31 @@
-﻿[assembly: Microsoft.Owin.OwinStartup(typeof(StockApplication.Startup))]
+﻿using System;
+using System.Configuration;
+using Owin;
+using Microsoft.AspNet.SignalR;
 
-namespace StockApplication {
-    using System.Configuration;
-    using Owin;
-    using Microsoft.AspNet.SignalR;
+[assembly: Microsoft.Owin.OwinStartup(typeof(StockApplication.Startup))]
 
-    public static class Startup {
-        public static void Configuration(IAppBuilder app) {
+namespace StockApplication
+{
+    public static class Startup
+    {
+        public static void Configuration(IAppBuilder app)
+        {
             RegisterServiceBus();
             app.MapSignalR();
         }
 
         #region Infrastructure
-        public static void RegisterServiceBus() {
-            var connectionString = ConfigurationManager.AppSettings["signalR.ServiceBus"];
-            if (string.IsNullOrEmpty(connectionString)) {
+        public static void RegisterServiceBus()
+        {
+            var connectionString = ConfigurationManager.AppSettings["signalr.ServiceBus"];
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                connectionString = Environment.GetEnvironmentVariable("signalr.ServiceBus", EnvironmentVariableTarget.User);
+            }
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
                 return;
             }
 

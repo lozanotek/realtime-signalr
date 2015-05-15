@@ -1,35 +1,43 @@
-﻿namespace StockApplication {
+﻿namespace StockApplication
+{
     using System.Collections.Generic;
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
     [HubName("stockTicker")]
-    public class StockTickerHub : Hub {
+    public class StockTickerHub : Hub
+    {
         private readonly StockTicker _stockTicker;
 
         public StockTickerHub() : this(StockTicker.Instance) { }
 
-        public StockTickerHub(StockTicker stockTicker) {
+        public StockTickerHub(StockTicker stockTicker)
+        {
             _stockTicker = stockTicker;
         }
 
-        public IEnumerable<Stock> GetAllStocks() {
+        public IEnumerable<Stock> GetAllStocks()
+        {
             return _stockTicker.GetAllStocks();
         }
 
-        public string GetMarketState() {
+        public string GetMarketState()
+        {
             return _stockTicker.MarketState.ToString();
         }
 
-        public void OpenMarket() {
+        public void OpenMarket()
+        {
             _stockTicker.OpenMarket();
         }
 
-        public void CloseMarket() {
+        public void CloseMarket()
+        {
             _stockTicker.CloseMarket();
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             _stockTicker.Reset();
         }
     }

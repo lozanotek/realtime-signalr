@@ -1,7 +1,9 @@
-﻿namespace StockApplication {
+﻿namespace StockApplication
+{
     using System;
 
-    public class Stock {
+    public class Stock
+    {
         private decimal _price;
         public string Symbol { get; set; }
         public decimal DayOpen { get; private set; }
@@ -10,37 +12,48 @@
 
         public decimal LastChange { get; private set; }
 
-        public decimal Change {
-            get {
+        public decimal Change
+        {
+            get
+            {
                 return Price - DayOpen;
             }
         }
 
-        public double PercentChange {
-            get {
+        public double PercentChange
+        {
+            get
+            {
                 return (double)Math.Round(Change / Price, 4);
             }
         }
 
-        public decimal Price {
-            get {
+        public decimal Price
+        {
+            get
+            {
                 return _price;
             }
-            set {
-                if (_price == value) {
+            set
+            {
+                if (_price == value)
+                {
                     return;
                 }
 
                 LastChange = value - _price;
                 _price = value;
 
-                if (DayOpen == 0) {
+                if (DayOpen == 0)
+                {
                     DayOpen = _price;
                 }
-                if (_price < DayLow || DayLow == 0) {
+                if (_price < DayLow || DayLow == 0)
+                {
                     DayLow = _price;
                 }
-                if (_price > DayHigh) {
+                if (_price > DayHigh)
+                {
                     DayHigh = _price;
                 }
             }

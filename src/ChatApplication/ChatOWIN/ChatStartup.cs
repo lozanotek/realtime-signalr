@@ -1,10 +1,13 @@
 ﻿[assembly: Microsoft.Owin.OwinStartup(typeof(ChatOWIN.ChatStartup))]
 
-namespace ChatOWIN {
+namespace ChatOWIN
+{
     using Owin;
 
-    public class ChatStartup {
-        public void Configuration(IAppBuilder app) {
+    public class ChatStartup
+    {
+        public void Configuration(IAppBuilder app)
+        {
             app.MapSignalR();
         }
     }

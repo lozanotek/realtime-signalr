@@ -3,7 +3,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("StockApplication")]
 [assembly: AssemblyProduct("StockApplication")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("lozanotek, inc.")]
+[assembly: AssemblyCopyright("Copyright © lozanotek, inc. 2014")]
 
 [assembly: ComVisible(false)]
 
