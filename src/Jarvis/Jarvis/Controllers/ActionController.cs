@@ -51,7 +51,12 @@ namespace Jarvis.Controllers
                 return;
             }
 
-            Clients.All.deliverMessage(data.From, videoKey);
+            //TODO: Figure out the correct way to do this logic
+            var temp = char.ToUpper(body[0]);
+            var array = body.ToCharArray();
+            array[0] = temp;
+
+            Clients.All.deliverMessage(data.From, new { Title = new string(array), Key = videoKey });
         }
     }
 }

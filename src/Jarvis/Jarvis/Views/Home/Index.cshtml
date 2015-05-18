@@ -37,13 +37,20 @@
     <script type="text/javascript" src="@Url.Content("~/scripts/jquery.signalR-2.2.0.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
     <script type="text/javascript">
-        function setVideoPlayer(videoKey) {
-            var videoUrl = "http://www.youtube.com/embed/" + videoKey + "?autoplay=1";
+        function setVideoPlayer(video) {
+            if (console.log) {
+                console.log("Title: " + video.Title + " Key: " + video.Key);
+            }
+
+            $("#videoTitle").html(video.Title);
+
+            var videoUrl = "http://www.youtube.com/embed/" + video.Key + "?autoplay=1";
             $("#youtube").attr("src", videoUrl);
         }
 
         $(function () {
             var notify = $.connection.notifyHub;
+            $.connection.hub.logging = true;
 
             $.connection.hub.disconnected(function () {
                 setTimeout(function () {
@@ -51,8 +58,8 @@
                 }, 5000);
             });
 
-            notify.client.deliverMessage = function (from, videoKey) {
-                setVideoPlayer(videoKey);
+            notify.client.deliverMessage = function (from, video) {
+                setVideoPlayer(video);
             };
 
             $.connection.hub.start();

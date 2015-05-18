@@ -2,6 +2,7 @@
 
 namespace Jarvis.Models
 {
+    // Represents the payload from the Twilio request
     public class TwilioData
     {
         public DateTime ApiVersion { get; set; }
