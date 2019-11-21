@@ -1,0 +1,12 @@
+[
+  {
+    "Key": "ch9",
+    "Url": "https://mediastream.microsoft.com/events/2019/1909/DotNetConf/player/DotNetConf.html?cid=mainsite",
+    "IsActive": false
+  },
+  {
+    "Key": "twitch",
+    "Url": "https://player.twitch.tv/?channel=visualstudio",
+    "IsActive": true
+  }
+]
