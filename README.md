@@ -2,4 +2,6 @@
 # Adding Realtime Features to Your Applications Using SignalR
 
 
-Repository for all resources (code, slides, etc.) for the **Adding Realtime Features to Your Applications Using SignalR** presentation.
+Repository for all the sample code for the presentation.
+
+Will update the repo (delete/add/etc.) as needed.
