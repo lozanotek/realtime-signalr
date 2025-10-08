@@ -1,44 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 using MarkupSync.Hubs;
 using MarkupSync.Models;
 using MarkupSync.Services;
 
-namespace MarkupSync.Controllers
+namespace MarkupSync.Controllers;
+
+[Route("sync")]
+[ApiController]
+public class SyncController : Controller
 {
-    [Authorize]
-    [Route("sync")]
-    public class SyncController : Controller
+    private readonly IHubContext<MessageHub> messageHub;
+    private readonly IMessageService messageService;
+
+    public SyncController(IHubContext<MessageHub> messageHub, IMessageService messageService)
     {
-        private readonly IHubContext<MessageHub> messageHub;
-        private readonly IMessageService messageService;
+        this.messageHub = messageHub;
+        this.messageService = messageService;
+    }
 
-        public SyncController(IHubContext<MessageHub> messageHub, IMessageService messageService)
+    [HttpPost("message")]
+    public IActionResult SyncMessage([FromBody]Message message)
+    {
+        if (message == null)
         {
-            this.messageHub = messageHub;
-            this.messageService = messageService;
+            return BadRequest("Invalid sync data");
         }
 
-        [HttpPost("message")]
-        public IActionResult SyncMessage([FromBody]Message message)
+        var content = message.Content;
+        if (!string.IsNullOrWhiteSpace(content))
         {
-            if (message == null)
-            {
-                return BadRequest("Invalid sync data");
-            }
-
-            var content = message.Content;
-            if (!string.IsNullOrWhiteSpace(content))
-            {
-                message.Content = content.Trim();
-            }
-            
-            messageService.SetActiveMessage(message);
-
-            messageHub.Clients.All.SendAsync("syncMessage", message);
-            return Ok(message);
+            message.Content = content.Trim();
         }
+        
+        messageService.SetActiveMessage(message);
+
+        messageHub.Clients.All.SendAsync("syncMessage", message);
+        return Ok(message);
     }
 }

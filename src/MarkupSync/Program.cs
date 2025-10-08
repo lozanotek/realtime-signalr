@@ -1,17 +1,39 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using MarkupSync.Hubs;
+using MarkupSync.Services;
 
-namespace MarkupSync
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+
+// Add services to the container.
+services.AddControllersWithViews();
+services.AddSignalR().AddAzureSignalR();
+services.AddCorsFromConfig("AllowCors");
+
+services.AddSingleton<IMessageService, MessageService>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
+
+app.UseCors("AllowCors");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+app.MapControllerRoute(
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<MessageHub>("/message");
+
+app.Run();

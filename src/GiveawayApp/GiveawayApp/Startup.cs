@@ -11,7 +11,9 @@ namespace GiveawayApp
         public void Configuration(IAppBuilder app)
         {
             // Specify that UserId should be pull from the IIdentity.Name
-            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => new PrincipalUserIdProvider());
+            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), 
+                () => new PrincipalUserIdProvider());
+
             app.MapSignalR();
         }
     }

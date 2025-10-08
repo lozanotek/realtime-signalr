@@ -22,7 +22,6 @@
             return base.OnReconnected();
         }
 
-
         public override Task OnDisconnected(bool stopCalled)
         {
             var user = this.GetUser();
